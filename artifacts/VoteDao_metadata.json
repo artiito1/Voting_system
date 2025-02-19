@@ -114,6 +114,24 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getAllPollings",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "active",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "ended",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -285,11 +303,11 @@
 			]
 		},
 		"VotDao.sol": {
-			"keccak256": "0x3753bf4f406695d19a0276a75e3a0fb4d2f92d7fd18a85aebb3e207a827bc5c1",
+			"keccak256": "0x13db784f8a04a1d78822b81d82aaeff1e3ba2ac53e59f34378e5b7583e0d5728",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://01591e781d96bd115484f6f0eef2c221a92d15474c4d520ae2aaaa8f4ec24eff",
-				"dweb:/ipfs/QmVtobttrTRajPmr9JgiHYrb4tvZXNFSs8JbchT9JQJFYf"
+				"bzz-raw://88468311058338da0377b5ec14735f6fb25324dbf34209470b5fffd3c59f37f3",
+				"dweb:/ipfs/QmfQfDdb1SYs8HFz181Mdp1ySpYu41eQ5St7qTP7zHB6cw"
 			]
 		}
 	},

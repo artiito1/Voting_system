@@ -18,6 +18,7 @@ contract VoteDao{
         string choice;
         uint time;
     }
+/////////////////////////////
 //poll struct
     struct Poll{
         string title;
@@ -114,7 +115,6 @@ contract VoteDao{
 
     // Do vote
     function vote(uint pollingId, string memory _choice) public pollingExist(pollingId) notExpired(pollingId) hasNotVoted(pollingId) {
-
         //pollings[pollingId]
         require(keccak256(abi.encodePacked(_choice)) == keccak256("Yes")||
         keccak256(abi.encodePacked(_choice)) == keccak256("No") ||
@@ -154,6 +154,41 @@ contract VoteDao{
     function pollExpirationStatus (uint pollingId)public view returns (bool){
         return block.timestamp < pollings[pollingId].expirationDate; // true or flase
     }
-    //get all vote by status 
+    
+
+    function getAllPollings() public view returns(uint[] memory active,uint[] memory ended){
+        uint total = pollingIdCounter.current();
+        uint activeCount = 0;
+        uint endedCount = 0;
+        
+        //get count of each array
+        for (uint i = 1; i<=total; i++){
+            if(pollings[i].expirationDate > block.timestamp){
+                activeCount++;
+            }else {
+                endedCount++;
+            }
+        }
+
+        active = new uint[](activeCount);
+        ended = new uint[](endedCount);
+
+        uint activeIndex = 0;
+        uint endedIndex = 0;
+        for(uint i= 1 ; i <= total ; i++){
+            if(pollings[i].expirationDate > block.timestamp){
+                active[activeIndex]=i;
+                activeIndex++;
+            }else {
+                ended[endedIndex] = i;
+                endedIndex++;
+            }         
+        }
+    } 
+
+    function getUserPollsAllreadyVoted() public view returns(uint[] memory){
+        return userVotedPollings[msg.sender];
+    }
+
     //get all votes already voted 
 }
