@@ -20,6 +20,37 @@
 						"type": "uint256"
 					},
 					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "voter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "choice",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "createdAt",
+						"type": "uint256"
+					}
+				],
+				"name": "Voted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "pollingId",
+						"type": "uint256"
+					},
+					{
 						"indexed": false,
 						"internalType": "string",
 						"name": "title",
@@ -132,6 +163,61 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "pollingId",
+						"type": "uint256"
+					}
+				],
+				"name": "getVotes",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "voter",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "choice",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "time",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct VoteDao.Vote[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "pollingId",
+						"type": "uint256"
+					}
+				],
+				"name": "pollExpirationStatus",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "pollingIdCounter",
 				"outputs": [
@@ -142,6 +228,24 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "pollingId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_choice",
+						"type": "string"
+					}
+				],
+				"name": "vote",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -181,11 +285,11 @@
 			]
 		},
 		"VotDao.sol": {
-			"keccak256": "0xd6d8a08692473b28c249ecc7ee1e7321fd2f70c92908e13cf0b7796a68f3f86e",
+			"keccak256": "0x3753bf4f406695d19a0276a75e3a0fb4d2f92d7fd18a85aebb3e207a827bc5c1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ee8960e6b30e0c3ae1a45a4d3210b25aa4e94544164dd9280783fd0c2d40d5cd",
-				"dweb:/ipfs/QmY3KwxUYrhJb7aTVes16aPgj2oTFtJUHcXDJK4tZa2jzv"
+				"bzz-raw://01591e781d96bd115484f6f0eef2c221a92d15474c4d520ae2aaaa8f4ec24eff",
+				"dweb:/ipfs/QmVtobttrTRajPmr9JgiHYrb4tvZXNFSs8JbchT9JQJFYf"
 			]
 		}
 	},

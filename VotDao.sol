@@ -12,27 +12,38 @@ contract VoteDao{
     constructor(){
         admin = msg.sender;
     }
-
+//vote struct
+    struct Vote{
+        address voter;
+        string choice;
+        uint time;
+    }
+//poll struct
     struct Poll{
         string title;
         uint expirationDate;
         string imageHash;
         string description;
-        mapping (address=>bool) hashVoted;
+        mapping (address=>bool) hasVoted;
         uint rejectVotes;
         uint acceptVotes;
         uint notInterestedVotes;
         bool exists;
+        Vote [] votes;
     }
 
     mapping (uint=>Poll) private pollings;
 
     mapping (address=>uint[]) private userVotedPollings;
 
-    // EVETNS
-    event pollingCreated(uint indexed pollingId, string title, uint expirationDate, uint createdAt);
 
-    //Modifier 
+/////////////////////////////
+// EVETNS
+    event pollingCreated(uint indexed pollingId, string title, uint expirationDate, uint createdAt);
+    event Voted(uint indexed pollingId, address indexed voter, string choice, uint createdAt);
+
+/////////////////////////////
+//Modifier
     modifier onlyAdmin(){
         require(msg.sender == admin,"Only Admin Can create This Operations");
         _;
@@ -41,6 +52,16 @@ contract VoteDao{
         require(pollings[pollingId].exists,"Polling dose not exist");
         _;
     }
+    modifier notExpired(uint pollingId){
+        require(block.timestamp < pollings[pollingId].expirationDate,"Polling has Ended");
+        _;
+    }
+    modifier hasNotVoted(uint pollingId){
+        require(!pollings[pollingId].hasVoted[msg.sender],"You have Already Voted");
+        _;
+    }
+/////////////////////////////
+//functions
 
     //Create Vote
     function createPoll(string memory _title, uint _durationInSecond, string memory _imageHash, string memory _description) public onlyAdmin{
@@ -88,8 +109,51 @@ contract VoteDao{
             selectItem.rejectVotes,
             selectItem.acceptVotes,
             selectItem.notInterestedVotes
-            );
+        );
+    }
+
+    // Do vote
+    function vote(uint pollingId, string memory _choice) public pollingExist(pollingId) notExpired(pollingId) hasNotVoted(pollingId) {
+
+        //pollings[pollingId]
+        require(keccak256(abi.encodePacked(_choice)) == keccak256("Yes")||
+        keccak256(abi.encodePacked(_choice)) == keccak256("No") ||
+        keccak256(abi.encodePacked(_choice)) == keccak256("NoInterested")
+        ,"Invaild Voting Choice");
+
+        //Update Counter for choice
+        if(keccak256(abi.encodePacked(_choice)) == keccak256("Yes")){
+
+            pollings[pollingId].acceptVotes++;
+        
+        }else if( keccak256(abi.encodePacked(_choice)) == keccak256("No")){
+
+            pollings[pollingId].rejectVotes++;
+
+        }else if(keccak256(abi.encodePacked(_choice)) == keccak256("NoInterested")){
+
+            pollings[pollingId].notInterestedVotes++;
         }
+
+        pollings[pollingId].hasVoted[msg.sender] = true;
+        userVotedPollings[msg.sender].push(pollingId);
+
+        Vote memory newVote = Vote(msg.sender,_choice,block.timestamp);
+        pollings[pollingId].votes.push(newVote);
+
+        //event for vote 
+        emit Voted(pollingId,msg.sender, _choice, block.timestamp);
+    }
+
+    function getVotes(uint pollingId)public view returns(Vote[] memory){
+        return pollings[pollingId].votes;
+    }
+
+
+    //for frontend maybe
+    function pollExpirationStatus (uint pollingId)public view returns (bool){
+        return block.timestamp < pollings[pollingId].expirationDate; // true or flase
+    }
     //get all vote by status 
     //get all votes already voted 
 }
