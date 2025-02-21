@@ -14,28 +14,28 @@ contract VoteDao{
     }
 //vote struct
     struct Vote{
-        address voter;
-        string choice;
-        uint time;
+        address voter; //seçmen
+        string choice; //seçenek
+        uint time; // ne zaman
     }
 /////////////////////////////
 //poll struct
     struct Poll{
         string title;
-        uint expirationDate;
+        uint expirationDate; //bitiş tarihi 
         string imageHash;
         string description;
-        mapping (address=>bool) hasVoted;
-        uint rejectVotes;
-        uint acceptVotes;
-        uint notInterestedVotes;
-        bool exists;
+        mapping (address=>bool) hasVoted; //seçmen listesi
+        uint rejectVotes; // hayır sayısı
+        uint acceptVotes; // evet sayısı
+        uint notInterestedVotes; // ilgilenmeyen sayısı
+        bool exists; // aktivmi 
         Vote [] votes;
     }
 
-    mapping (uint=>Poll) private pollings;
+    mapping (uint=>Poll) private pollings; //tum seçimler
 
-    mapping (address=>uint[]) private userVotedPollings;
+    mapping (address=>uint[]) private userVotedPollings; //kullnıcının yaptığı seçimler
 
 
 /////////////////////////////
