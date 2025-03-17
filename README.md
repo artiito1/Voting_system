@@ -1,33 +1,31 @@
-# VoteDao - Blockchain Oylama Sistemi
+# VoteDao - Blockchain Voting System
 
-## 📌 Genel Bakış
-VoteDao, Solidity ile yazılmış, merkeziyetsiz ve güvenli bir şekilde oylama anketleri oluşturmayı ve yönetmeyi sağlayan bir akıllı sözleşmedir. Kullanıcılar, mevcut anketlere belirtilen seçeneklerle oy verebilir ve tüm oylar şeffaf bir şekilde blockchain üzerinde saklanır.
+## 📌 Overview
+VoteDao is a smart contract written in Solidity that enables the creation and management of voting polls in a decentralized and secure manner. Users can vote on existing polls with specified options, and all votes are stored transparently on the blockchain.
 
-## 🚀 Özellikler
-- **Anket Oluşturma:** Yalnızca admin (yönetici) tarafından yeni anketler oluşturulabilir ve süresi belirlenebilir.
-- **Güvenli Oylama:** Kullanıcılar her ankete yalnızca bir kez oy verebilir.
-- **Oylama Seçenekleri:** Kabul (Yes), Ret (No), İlgilenmiyorum (NoInterested).
-- **Anket Detaylarını Görüntüleme:** Kullanıcılar aktif ve tamamlanmış anketleri görüntüleyebilir.
-- **Şeffaflık:** Tüm oylar kaydedilir ve görüntülenebilir.
-- **Esnek Yönetim:** Bir anketin hala aktif olup olmadığını kontrol etme imkanı.
+## 🚀 Features
+- **Poll Creation:** Only the admin (manager) can create new polls and set their duration.  
+- **Secure Voting:** Users can vote only once per poll.  
+- **Voting Options:** Yes, No, Not Interested.  
+- **View Poll Details:** Users can view active and completed polls.  
+- **Transparency:** All votes are recorded and viewable.  
+- **Flexible Management:** Ability to check if a poll is still active.
 
-## 🛠️ Kullanılan Teknolojiler
-- **Solidity** - Akıllı sözleşme geliştirme.
-- **OpenZeppelin** - `Counters` kütüphanesi ile anket kimliklerini yönetmek için.
-- **Web3.js** - Akıllı sözleşmeyle etkileşim sağlamak için.
-- **Ethereum Blockchain** - Verilerin güvenli bir şekilde saklanması ve şeffaflığı sağlamak için.
+## 🛠️ Technologies Used
+- **Solidity** - Smart contract development.  
+- **OpenZeppelin** - For managing poll identities with the `Counters` library.  
+- **Web3.js** - For interacting with the smart contract.  
+- **Ethereum Blockchain** - For secure data storage and transparency.
 
-## 📜 Akıllı Sözleşme Yapısı
-- **Admin:** Yalnızca anket oluşturabilen yönetici.
-- **Poll Struct:** Anketin başlığı, açıklaması, süresi ve oy bilgilerini içerir.
-- **Vote Struct:** Kullanıcının adresi, seçtiği seçenek ve oy zamanı gibi bilgileri içerir.
-- **Fonksiyonlar:**
-  - `createPoll(...)` Yeni bir anket oluşturur.
-  - `vote(...)` Kullanıcının oy vermesini sağlar.
-  - `getPollDetailes(...)` Anketin detaylarını döndürür.
-  - `getVotes(...)` Belirli bir anket için tüm oyları alır.
-  - `getAllPollings()` Aktif ve tamamlanmış anketleri getirir.
-  - `pollExpirationStatus(...)` Anketin süresinin dolup dolmadığını kontrol eder.
-  - `getUserPollsAllreadyVoted()` Kullanıcının oy verdiği tüm anketleri getirir.
-
-
+## 📜 Smart Contract Structure
+- **Admin:** Only the admin can create polls.  
+- **Poll Struct:** Contains the poll's title, description, duration, and vote information.  
+- **Vote Struct:** Contains the user's address, chosen option, and vote time.  
+- **Functions:**  
+  - `createPoll(...)` - Creates a new poll.  
+  - `vote(...)` - Allows the user to vote.  
+  - `getPollDetails(...)` - Returns the poll's details.  
+  - `getVotes(...)` - Retrieves all votes for a specific poll.  
+  - `getAllPolls()` - Retrieves active and completed polls.  
+  - `pollExpirationStatus(...)` - Checks if the poll's duration has expired.  
+  - `getUserPollsAlreadyVoted()` - Retrieves all polls the user has already voted on.
